@@ -1,16 +1,17 @@
-const bcrypt = require('bcrypt');
-const jwt = require('jsonwebtoken');
-const Users = require('../../mongo/models/users');
-const Products = require('../../mongo/models/products');
+import bcrypt from 'bcrypt';
+import jwt from 'jsonwebtoken';
+import Users from '../../mongo/models/users';
+import Products from '../../mongo/models/products';
+import { Request, Response } from 'express';
 
-const login = async (req, res) => {
+const login = async (req: Request, res: Response) => {
     try {
         const { email, password } = req.body;
         const user = await Users.findOne({ email });
         if (user && (await bcrypt.compare(password, user.password))) {
             const token = jwt.sign(
                 { userId: user._id, role: user.role },
-                process.env.JWT_SECRET,
+                process.env.JWT_SECRET!,
                 { expiresIn: 600 });
             res.send({ status: 'OK', data: { token } });
         } else {
@@ -21,7 +22,7 @@ const login = async (req, res) => {
     }
 }
 
-const createUser = async (req, res) => {
+const createUser = async (req: Request, res: Response): Promise<void> => {
     try {
         const { username, email, password, data } = req.body;
 
@@ -58,7 +59,7 @@ const createUser = async (req, res) => {
     }
 };
 
-const deleteUser = async (req, res) => {
+const deleteUser = async (req: Request, res: Response): Promise<void> => {
     try {
         const { userId } = req.body;
 
@@ -79,9 +80,9 @@ const deleteUser = async (req, res) => {
     }
 };
 
-const getUsers = async (req, res) => {
+const getUsers = async (req: Request, res: Response): Promise<void> => {
     try {
-        const users = await Users.find().select({ password: 0, __v: 0});
+        const users = await Users.find().select({ password: 0, __v: 0 });
         res.send({
             status: 'OK',
             data: users
@@ -92,7 +93,7 @@ const getUsers = async (req, res) => {
 
 };
 
-const updateUser = async (req, res) => {
+const updateUser = async (req: Request, res: Response): Promise<void> => {
     try {
         const { username, email, data } = req.body;
         await Users.findByIdAndUpdate(req.sessionData.userId, {
@@ -113,7 +114,7 @@ const updateUser = async (req, res) => {
     });
 };
 
-module.exports = {
+export default {
     login,
     createUser,
     deleteUser,

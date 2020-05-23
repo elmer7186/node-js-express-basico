@@ -10,16 +10,16 @@
  * 
  * - Ejecutar desde el directorio raíz:
  * 
- *     node src/basic-examples/express/02-http-query-params.js
+ *     node src/basic-examples/express/02-http-query-params.ts
  */
-const express = require('express');
+import express, { Application, Request, Response } from 'express';
 
-const { info } = require('../modules/local-modules/my-log-individual-export');
-const { countries } = require('countries-list');
+import { info } from '../modules/local-modules/my-log-individual-export';
+import { countries } from 'countries-list';
 
-const app = express();
+const app: Application = express();
 
-app.get('/', (request, response) => {
+app.get('/', (request: Request, response: Response): void => {
     response.status(200).send('HELLO');
 });
 
@@ -28,12 +28,12 @@ app.get('/info', (request, response) => {
     response.send('info');
 });
 
-app.get('/country', (request, response) => {
+app.get('/country', (request: Request, response: Response): void => {
     console.log('request', request.query);
     response.json(countries[request.query.code]);
 });
 
-app.get('*', (request, response) => {
+app.get('*', (request: Request, response: Response): void => {
     response.status(404).send('NOT FOUND');
 });
 

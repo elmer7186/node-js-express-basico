@@ -13,18 +13,18 @@
  * 
  * - Ejecutar desde el directorio raíz:
  * 
- *     node src/basic-examples/modules/04-thirdparty-module-countries.js
+ *     node src/basic-examples/modules/04-thirdparty-module-countries.ts
  **/
-var http = require('http');
-var url = require('url');
-var querystring = require('querystring');
-var { info } = require('../modules/local-modules/my-log-individual-export');
-var { countries } = require('countries-list');
+import http from 'http';
+import url from 'url';
+import querystring from 'querystring';
+import { info } from '../modules/local-modules/my-log-individual-export';
+import { countries } from 'countries-list';
 
-var server = http.createServer(function (request, response) {
+var server = http.createServer(function (request, response): void {
 
     var parsed = url.parse(request.url);
-    var pathname = parsed.pathname;
+    var pathname: string = parsed.pathname;
     var query = querystring.parse(parsed.query);
 
     if (pathname === '/') {

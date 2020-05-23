@@ -1,6 +1,7 @@
-const jwt = require('jsonwebtoken');
+import jwt from 'jsonwebtoken';
+import { Request, Response, NextFunction } from 'express';
 
-const isValidHostname = (req, res, next) => {
+const isValidHostname = (req: Request, res: Response, next: NextFunction) => {
     const validHost = ['127.0.0.1', 'localhost'];
     if (validHost.includes(req.hostname)) {
         next();
@@ -9,11 +10,11 @@ const isValidHostname = (req, res, next) => {
     }
 };
 
-const isAuth = (req, res, next) => {
+const isAuth = (req: Request, res: Response, next: NextFunction): void => {
     try {
         const { token } = req.headers;
         if (token) {
-            const data = jwt.verify(token, process.env.JWT_SECRET);
+            const data: any = jwt.verify(token as string, process.env.JWT_SECRET!);
             req.sessionData = { userId: data.userId, role: data.role };
             next();
         } else {
@@ -30,7 +31,7 @@ const isAuth = (req, res, next) => {
     }
 };
 
-const isAdmin = (req, res, next) => {
+const isAdmin = (req: Request, res: Response, next: NextFunction) => {
     try {
         const { role } = req.sessionData;
         if (role !== 'admin') {
@@ -48,7 +49,7 @@ const isAdmin = (req, res, next) => {
     }
 }
 
-module.exports = {
+export {
     isValidHostname,
     isAuth,
     isAdmin

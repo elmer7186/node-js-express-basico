@@ -15,12 +15,12 @@
  * 
  * - Ejecutar desde el directorio raíz:
  * 
- *     node src/basic-examples/modules/03-log-local-individual-module.js
+ *     node src/basic-examples/modules/03-log-local-individual-module.ts
  */
-var http = require('http');
-var { info } = require('./local-modules/my-log-individual-export');
+import http from 'http';
+import { info } './local-modules/my-log-individual-export';
 
-var server = http.createServer((request, response) => {
+var server = http.createServer((request, response): void => {
 
     if (request.url === '/') {
         response.writeHead(200, { 'Content-Type': 'text/html' });

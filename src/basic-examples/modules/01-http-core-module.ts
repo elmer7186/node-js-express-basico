@@ -26,12 +26,12 @@
  * 
  * - Ejecutar desde el directorio raíz:
  * 
- *     node src/basic-examples/modules/01-http-core-module.js
+ *     node src/basic-examples/modules/01-http-core-module.ts
  */
 
-var http = require('http');
+import http from 'http';
 
-var server = http.createServer((request, response) => {
+var server = http.createServer((request, response): void => {
 
     if (request.url === '/') {
         response.writeHead(200, { 'Content-Type': 'text/html' });

@@ -21,12 +21,12 @@
  * 
  * - Ejecutar desde el directorio raíz:
  * 
- *     node src/basic-examples/modules/02-log-local-module.js
+ *     node src/basic-examples/modules/02-log-local-module.ts
  */
-var http = require('http');
-var log = require('./local-modules/my-log');
+import http from 'http';
+import log from './local-modules/my-log';
 
-var server = http.createServer((request, response) => {
+var server = http.createServer((request, response): void => {
 
     if (request.url === '/') {
         response.writeHead(200, { 'Content-Type': 'text/html' });

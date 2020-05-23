@@ -11,22 +11,22 @@
  * 
  * - Ejecutar desde el directorio raíz:
  * 
- *     node src/basic-examples/express/03-http-path-params.js
+ *     node src/basic-examples/express/03-http-path-params.ts
  */
-const express = require('express');
+import express, { Application, Request, Response } from 'express';
 
-const { languages } = require('countries-list');
+import { languages, Language } from 'countries-list';
 
-const app = express();
+const app: Application = express();
 
-app.get('/', (request, response) => {
+app.get('/', (request: Request, response: Response): void => {
     response.status(200).send('HELLO');
 });
 
 /** path params */
-app.get('/languages/:lang', (request, response) => {
+app.get('/languages/:lang', (request: Request, response: Response): void => {
     console.log('request.params', request.params);
-    const lang = languages[request.params.lang];
+    const lang: Language = languages[request.params.lang];
     if (lang) {
         response
             .json({
@@ -43,7 +43,7 @@ app.get('/languages/:lang', (request, response) => {
     }
 });
 
-app.get('*', (request, response) => {
+app.get('*', (request: Request, response: Response): void => {
     response.status(404).send('NOT FOUND');
 });
 
